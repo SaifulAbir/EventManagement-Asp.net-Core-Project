@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EventManagement.Models.AdminOverview
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h2>
+                <span class="badge badge-light">
+                    Admin Dashboard </span>
+            </h2>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">Total Registered Customer</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">From <b>@DateTime.Now.ToString("dd MMMM yyyy")</b> To <b>@Model.RecentBookingDate</b> Total Upcoming Event </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">Total Feedback from <b>Customer</b> </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" style="padding-bottom:50px;">
+        <div class="col-md-4">
+            <div class="card-counter primary">
+                <i class="fa fa-users"></i>
+                <span class="count-numbers">Total @Model.TotalUser</span>
+                <span class="count-name"> Registered Customer.</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-counter danger">
+                <i class="fa fa-bullhorn"></i>
+                <span class="count-numbers">Total @Model.TotalUpcoming</span>
+                <span class="count-name">Upcoming Event.</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-counter success">
+                <i class="fa fa-comments-o"></i>
+                <span class="count-numbers">Total @Model.TotalFeedback</span>
+                <span class="count-name"> Feedback from Customer.</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+

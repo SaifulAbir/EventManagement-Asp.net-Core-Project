@@ -1,0 +1,60 @@
+﻿@model EventManagement.Models.BookingEquipment
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<div class="container">
+    <br />
+    <div class="row">
+    <div class="col-md-5">
+        <form asp-controller="BookEquipment" asp-action="Equipment" method="post">
+
+            <h3><span class="badge badge-danger">Book Equipment</span></h3><br />
+            <div class="form-group">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @for (int i = 0; i < Model.EquipmentList.Count(); i++)
+                {
+                    <input asp-for="@Model.EquipmentList[i].EquipmentChecked" type="checkbox" />
+                    <label asp-for="@Model.EquipmentList[i].EquipmentID">@Model.EquipmentList[i].EquipmentName</label>
+                    <input type="hidden" asp-for="@Model.EquipmentList[i].EquipmentID" />
+                    <input type="hidden" asp-for="@Model.EquipmentList[i].EquipmentName" />
+                    <br />
+                }
+                <div class="form-actions">
+                    <input id="Submit" type="submit" class="btn btn-danger" value="Book Equipment" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-7">
+        <div id="wrap">
+            <div id="slider-holder">
+                @{
+                    var data = (List<EventManagement.Models.Equipment>)ViewBag.SliderEquipmentImages;
+
+                    for (int i = 0; i < (data.Count()); i++)
+                    {
+                <div class="slide">
+                    <div style="background-color:black"><h1 style="color:cyan">@data[i].EquipmentName</h1></div>
+                    <img src="/@data[i].EquipmentFilePath" width="400" height="250" alt="@data[i].EquipmentName">
+                    <div style="background-color:white"><h3 class="text-justify">Tk. @data[i].EquipmentCost</h3></div>
+                </div>
+                        <div id="btn-nav-holder">
+                            @if (i == 0)
+                            {
+                                <img src="/images/bn-slide-on.png" width="8" height="8" alt="" />
+                            }
+                            else
+                            {
+                                <img src="/images/bn-slide-off.png" width="8" height="8" alt="" />
+                            }
+                        </div>
+                    }
+                }
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+        </div>
+</div>

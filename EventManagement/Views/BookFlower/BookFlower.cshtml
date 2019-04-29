@@ -1,0 +1,58 @@
+﻿@model EventManagement.Models.BookingFlower
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<div class="container">
+    <br />
+    <div class="row">
+    <div class="col-md-5">
+        <form enctype="multipart/form-data" asp-controller="BookFlower" asp-action="BookFlower" method="post">
+            <h3><span class="badge badge-danger">Book Flowers</span></h3><br />
+            <div class="form-group">
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+                @for (int i = 0; i < Model.FlowerList.Count(); i++)
+                {
+                    <input asp-for="@Model.FlowerList[i].FlowerChecked" type="checkbox" />
+                    <label asp-for="@Model.FlowerList[i].FlowerID">@Model.FlowerList[i].FlowerName</label>
+                    <input type="hidden" asp-for="@Model.FlowerList[i].FlowerID" />
+                    <input type="hidden" asp-for="@Model.FlowerList[i].FlowerName" />
+                    <br />
+                }
+                <div class="form-actions">
+                    <input id="Submit" type="submit" class="btn btn-danger" value="Book Flowers" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-7">
+        <div id="wrap">
+            <div id="slider-holder">
+                @{
+                    var data = (List<EventManagement.Models.Flower>)ViewBag.SliderFlowerImages;
+
+                    for (int i = 0; i < (data.Count()); i++)
+                    {
+                <div class="slide">
+                    <div style="background-color:black"><h1 style="color:cyan">@data[i].FlowerName</h1></div>
+                    <img src="/@data[i].FlowerFilePath" width="400" height="250" alt="@data[i].FlowerName">
+                    <div style="background-color:white"><h3 class="text-justify">Tk. @data[i].FlowerCost</h3></div>
+                </div>
+                        <div id="btn-nav-holder">
+                            @if (i == 0)
+                            {
+                                <img src="/images/bn-slide-on.png" width="8" height="8" alt="" />
+                            }
+                            else
+                            {
+                                <img src="/images/bn-slide-off.png" width="8" height="8" alt="" />
+                            }
+                        </div>
+                    }
+                }
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+        </div>
+</div>

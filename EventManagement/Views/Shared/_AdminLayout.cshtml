@@ -1,0 +1,234 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dashboard</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/temp/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/temp/css/style.css" />
+        <link rel="stylesheet" href="~/temp/css/font-awesome.min.css" />
+        <link href="~/lib/datetimepicker/jqueryui.css" rel="stylesheet" />
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/datetimepicker/jqueryui.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+    </environment>
+    <script>$(document).ready(function () {
+             function DisableBackButton() {
+                 window.history.forward()
+             }
+             DisableBackButton();
+             window.onload = DisableBackButton;
+             window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+             window.onunload = function () { void (0) }
+         });</script>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+    <div class="container-fluid bg-color header-top d-none d-md-block">
+        <div class="container">
+            <div class="row text-light pt-2 pb-2">
+                <div class="col-md-5"><i class="fa fa-phone-square" aria-hidden="true"></i> 01626296800 &nbsp <i class="fa fa-envelope-o" aria-hidden="true"></i> saiful.abir20@gmail.com</div>
+                <div class="col-md-4">
+                    <a class="text-white p-5" asp-area="" >Hi @Context.Session.GetString("Username") !</a>
+                </div>
+
+                <!--<div class="col-md-2"> <i class="fa fa-user-o" aria-hidden="true"></i> Account </div>-->
+                <!--<div class="col-md-2"> <i class="fa fa-cart-plus" aria-hidden="true"></i> My Cart - $ 0.00</div>-->
+                <div class="col-md-3">
+                    <ul class="list-inline">
+                        <li class="text-white list-inline-item" aria-hidden="true">Connect With Us:</li>
+                        <li class="list-inline-item"><a class="text-white p-1" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a class="text-white" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a class="text-white" href="#"><i class="fa fa-google"></i></a></li>
+                        <li class="list-inline-item"><a class="text-white" href="#"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--nav -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white w-100" id="navbar">
+        <a asp-area="" asp-controller="Admin" asp-action="Index" class="navbar-brand order-2 order-lg-1"><img class="img-fluid" src="~/images/logo2.png" alt="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-1 order-lg-2" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link">Home</a>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        About
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-area="" asp-controller="Admin" asp-action="Dashboard" class="dropdown-item">Dashboard</a>
+
+                        <a asp-area="" asp-controller="Admin" asp-action="About" class="dropdown-item">About Us</a>
+                        
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Event
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-area="" asp-controller="Venue" asp-action="Add" class="dropdown-item">Add Venue</a>
+
+                        <a asp-area="" asp-controller="Equipment" asp-action="Add" class="dropdown-item">Add Equiments</a>
+                        <a asp-area="" asp-controller="Food" asp-action="Add" class="dropdown-item">Add Food</a>
+                        <a asp-area="" asp-controller="Light" asp-action="Add" class="dropdown-item">Add Light</a>
+                        <a asp-area="" asp-controller="Flower" asp-action="Add" class="dropdown-item">Add Flower</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        View Event
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-area="" asp-controller="AllVenue" asp-action="ViewAllVenues" class="dropdown-item">View all Venue</a>
+                        <a asp-area="" asp-controller="AllEquipment" asp-action="ViewAllEquipments" class="dropdown-item">View all Equipment</a>
+                        <a asp-area="" asp-controller="AllFood" asp-action="ViewAllFoods" class="dropdown-item">View all Food</a>
+                        <a asp-area="" asp-controller="AllLight" asp-action="ViewAllLights" class="dropdown-item">View all Light</a>
+                        <a asp-area="" asp-controller="AllFlower" asp-action="ViewAllFlowers" class="dropdown-item">View all Flower</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="ShowBookingDetails" asp-action="AllBookings" class="nav-link">Booking Approval</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-area="" asp-controller="UsersProfiles" asp-action="Profile" class="dropdown-item">User Profiles</a>
+                        <a asp-area="" asp-controller="Admin" asp-action="ViewAllFeedback" class="dropdown-item">User Feedback</a>
+                        <a asp-area="" asp-controller="Admin" asp-action="ViewAllMessage" class="dropdown-item">User Messages</a>
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Admin" asp-action="Contact" class="nav-link">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <div class="order-3 navbar-right-elements">
+            <div class="search-cart">
+                <!-- search -->
+                <a asp-area="" asp-controller="Login" asp-action="Logout" class="btn btn-outline-danger btn-rounded waves-effect">LogOut</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+
+    </div>
+    <!-- footer -->
+    <footer class="bg-light">
+        <div class="section">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-6 mb-5 mb-md-0 text-center text-sm-left">
+                        <h3 class="mb-4">Dream Weeding</h3>
+                        <ul class="pl-0 list-unstyled">
+                            <li class="mb-2">Take one step closer to organizing the perfect event with Dream Weeding. Dream Weeding helps you adjust event schedules and book event, manage asset, material requirements and makes sure that no tasks are missed.</li>
+
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-5 mb-md-0 text-center text-sm-left">
+                        <h3 class="mb-4">Useful Link</h3>
+                        <ul class="pl-0 list-unstyled">
+                            <li class="mb-2"><a class="text-color" href="about.html">News & Tips</a></li>
+                            <li class="mb-2"><a class="text-color" href="about.html">About Us</a></li>
+                            <li class="mb-2"><a class="text-color" href="address.html">Support</a></li>
+                            <li class="mb-2"><a class="text-color" href="shop.html">Book</a></li>
+                            <li class="mb-2"><a class="text-color" href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center text-sm-left">
+                        <h3 class="mb-4">Our Policies</h3>
+                        <ul class="pl-0 list-unstyled">
+                            <li class="mb-2"><a class="text-color" href="404.html">Privacy Policy</a></li>
+                            <li class="mb-2"><a class="text-color" href="404.html">Terms & Conditions</a></li>
+                            <li class="mb-2"><a class="text-color" href="404.html">Cookie Policy</a></li>
+
+
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-5 mb-md-0 text-center text-sm-left">
+                        <h3 class="mb-4">Contact</h3>
+                        <p>
+                            Nigar Plaza, Level # 7, Road # 02, Sector # 03, Rajlakshmi, Uttara, Dhaka-1230
+                        </p>
+                        <p>+880162629-6800</p>
+                        <p>info@dream.com</p>
+                        <ul class="list-inline social-icons">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 text-center text-md-left mb-4 mb-md-0 align-self-center">
+                        <p class="text-white mb-0">Dream Weeding &copy; 2019 all right reserved.</p>
+                    </div>
+                    <div class="col-md-4 text-center text-md-center mb-4 mb-md-0 pt-2">
+                        <!--<p>Developed by Saiful Islam</p>-->
+                    </div>
+                    <div class="col-md-3 text-center text-md-right mb-4 mb-md-0 pt-3">
+                        <ul class="list-inline">
+
+                            <!--<li class="list-inline-item"><img src="images/payment-card/card-2.jpg" alt="card"></li>-->
+                            <p>Developed by Saiful Islam</p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /footer -->
+
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

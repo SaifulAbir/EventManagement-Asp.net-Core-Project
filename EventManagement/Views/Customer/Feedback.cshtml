@@ -1,0 +1,89 @@
+﻿@model EventManagement.Models.Feedback
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="imagebg"></div>
+
+<div class="row " style="margin-top: 50px; margin-left: 330px;">
+
+    <div class="col-md-7 col-md-offset-5 form-container">
+        <h2>Feedback</h2>
+        @if (TempData["FeedbackMessage"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["FeedbackMessage"]</p>
+        }
+        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
+        <p>
+            Please provide your feedback below:
+        </p>
+        <form method="post" enctype="multipart/form-data" asp-controller="Customer" asp-action="Feedback" id="reused_form">
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>How do you rate your overall experience?</label>
+                    <p>
+                        <label class="radio-inline">
+                            <input asp-for="Experience" type="radio" id="radio_experience" value="bad">
+                            Bad
+                        </label>
+
+                        <label class="radio-inline">
+                            <input asp-for="Experience" type="radio" id="radio_experience" value="average">
+                            Average
+                        </label>
+
+                        <label class="radio-inline">
+                            <input asp-for="Experience" type="radio" id="radio_experience" value="good">
+                            Good
+                        </label>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label for="comments">
+                        Comments:
+                    </label>
+                    <textarea asp-for="Comment" class="form-control" type="textarea" id="comments" placeholder="Your Comments" maxlength="6000" rows="7"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label for="Profession">
+                        Your Profession:
+                    </label>
+                    <input asp-for="Profession" type="text" class="form-control" id="name" placeholder="Profession" required>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label for="files">
+                        Your Photo:
+                    </label>
+                    <input required type="file" title="Please Upload Photo" name="files" multiple />
+                </div>
+                <div class="col-sm-6 form-group">
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <button type="submit" class="btn btn-lg btn-warning btn-block">Post </button>
+                </div>
+            </div>
+
+        </form>
+
+        <div id="error_message"
+             style="width:100%; height:100%; display:none; ">
+            <h3>Error</h3>
+            Sorry there was an error sending your form.
+
+        </div>
+    </div>
+</div>

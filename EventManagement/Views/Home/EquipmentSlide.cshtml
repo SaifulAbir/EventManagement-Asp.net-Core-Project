@@ -1,0 +1,27 @@
+﻿<div id="wrap1">
+    <div id="slider-holder">
+        @{
+            var equdata = (List<EventManagement.Models.Equipment>)ViewBag.SliderEquipmentImages;
+
+            for (int j = 0; j < (equdata.Count()); j++)
+            {
+                <div class="slide">
+                    <div style="background-color:black"><h1 style="color:cyan">@equdata[j].EquipmentName</h1></div>
+                    <img src="/@equdata[j].EquipmentFilePath" width="400" height="250" alt="@equdata[j].EquipmentName">
+                    <div style="background-color:white"><h3 class="text-justify">Tk. @equdata[j].EquipmentCost</h3></div>
+                </div>
+                <div id="btn-nav-holder">
+                    @if (j == 0)
+                    {
+                        <img src="/images/bn-slide-on.png" width="8" height="8" alt="" />
+                    }
+                    else
+                    {
+                        <img src="/images/bn-slide-off.png" width="8" height="8" alt="" />
+                    }
+                </div>
+            }
+        }
+    </div>
+    <div style="clear: both;"></div>
+</div>

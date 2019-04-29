@@ -1,0 +1,34 @@
+﻿@model EventManagement.Models.Feedback
+@{
+    Layout = "~/Views/Shared/_AdminLayoutDataTable.cshtml";
+}
+<div class="container">
+    <br />
+    <div class="row">
+        <div style="width:118%; margin:0px 190px 0px 195px;">
+            <div class="card bg-colornew w-100 shadow">
+                <div class="card-header badge"><h3>Details of Feedback</h3></div>
+                <div class="card-body">
+                    <div class="col-lg-5 d-inline-block">
+                        <label class="control-label" asp-for="@Model.Createdby">Name</label>
+                        <input asp-for="@Model.Createdby" type="text" readonly="readonly" class="form-control" />
+                    </div>
+                    <div class="col-lg-4 d-inline-block">
+                        <label class="control-label" asp-for="@Model.Experience">Experience</label>
+                        <input asp-for="@Model.Experience" readonly="readonly" name="VenueCost" type="text" class="form-control" />
+                    </div>
+                    <div class="col-lg-10">
+                        <br />
+                        <label class="control-label" asp-for="@Model.Comment"><b>Comment</b></label>
+                        <p>@Model.Comment</p>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <br />
+</div>

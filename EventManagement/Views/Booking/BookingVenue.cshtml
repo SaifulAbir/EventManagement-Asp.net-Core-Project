@@ -1,0 +1,220 @@
+﻿@model EventManagement.Models.BookingVenue
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<div class="container maincon">
+    <br />
+    <div class="row">
+    <div class="col-md-5">
+        <form asp-controller="Booking" asp-action="BookingVenue" method="post">
+            @Html.AntiForgeryToken()
+
+            <h3><span class="badge badge-danger">Book Venue</span></h3><br />
+            <div class="form-group">
+                <label asp-for="EventTypeID">Event Type</label>
+                <select asp-for="EventTypeID" class="form-control" asp-items="@(new SelectList(string.Empty, "EventID", "EventType"))"></select>
+                <span asp-validation-for="EventTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VenueID">Venue Type</label>
+                <select asp-for="VenueID" class="form-control" asp-items="@(new SelectList(string.Empty, "VenueID", "VenueName"))"></select>
+                <span asp-validation-for="VenueID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GuestCount">No .Of Guest</label>
+                <input asp-for="GuestCount" class="form-control" />
+                <span asp-validation-for="GuestCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="BookingDate">BookingDate</label>
+                <input asp-for="BookingDate" id="BookingDate" type="text" class="form-control" />
+                <span asp-validation-for="BookingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="button" id="btnCheckBooking" class="btn btn-danger" onclick="CheckBooking();" value="Check Availability" />
+                <input type="submit" id="btnBookingEvent" class="btn btn-danger" onclick="BookingEvent();" value="Book Event" />
+                <a class="btn btn-warning" href="/Booking/BookingVenue">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-7">
+        <div id="wrap">
+            <div id="slider-holder">
+                @{
+                    var data = (List<EventManagement.Models.Venue>)ViewBag.SliderImages;
+
+                    for (int i = 0; i < (data.Count()); i++)
+                    {
+                <div class="slide">
+                    <div style="background-color:black"><h1 style="color:cyan">@data[i].VenueName</h1></div>
+
+                    <img src="~/@data[i].VenueFilePath" width="400" height="250" alt="@data[i].VenueName">
+
+                    <div style="background-color:white" ><h3 class="text-justify">Tk. @data[i].VenueCost</h3></div>
+
+                </div>
+                        <div id="btn-nav-holder">
+                            @if (i == 0)
+                            {
+                                <img src="~/images/bn-slide-on.png" width="8" height="8" alt="" />
+                            }
+                            else
+                            {
+                                <img src="~/images/bn-slide-off.png" width="8" height="8" alt="" />
+                            }
+                        </div>
+                        
+                    }
+                }
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+       @if (TempData["BookingMessage"] == null)
+        {
+           <text>
+        $("#btnBookingEvent").hide();
+        </text>
+       }
+       else
+       {
+            <text>
+        $("#btnBookingEvent").hide();
+        </text>
+
+       }
+        $.getJSON('@Url.Content("~/")' + "api/EventData", function (data)
+        {
+           var items = '';
+           items += "<option value='" + "" + "'>" + "----Select----" + "</option>";
+            $("#EventTypeID").empty();
+            $.each(data, function (i, subcategory)
+            {
+               items += "<option value='" + subcategory.EventID + "'>" + subcategory.EventType + "</option>";
+           });
+            $('#EventTypeID').html(items);
+
+           if ('@Model.EventTypeID' !='')
+           {
+                   $('#EventTypeID').val('@Model.EventTypeID');
+           }
+       });
+
+         $.getJSON('@Url.Content("~/")' + "api/VenueData", function (data)
+        {
+            var items = '';
+            items += "<option value='" + "" + "'>" + "----Select----" + "</option>";
+            $("#VenueID").empty();
+            $.each(data, function (i, subcategory)
+            {
+                items += "<option value='" + subcategory.VenueID + "'>" + subcategory.VenueName + "</option>";
+            });
+            $('#VenueID').html(items);
+
+            if ('@Model.VenueID' !='')
+            {
+                   $('#VenueID').val('@Model.VenueID');
+            }
+        });
+      
+
+         $("#BookingDate").datepicker
+             ({
+            dateFormat: "yy-mm-dd",
+                 changeMonth: true,
+                 changeYear: true,
+                 yearRange: "-100:+100",
+                 minDate:7,
+                 onSelect: function (date)
+                 {
+                var BookingDate = new Date(date);
+                var today = new Date();
+
+                if (Date.parse(BookingDate) == Date.parse(today))
+                //if (BookingDate == today)
+                {
+                         $("#BookingDate").val('');
+                    alert("Cannot Conduct Event Today itself");
+                }
+                else {
+
+                }
+            }
+        });
+
+
+
+
+
+    });
+
+
+      function CheckBooking()
+         {
+
+          if ($('#EventTypeID').val() == '' || $('#EventTypeID').val() == null)
+          {
+              alert("Please select Event Type !");
+          }
+          else if ($('#VenueID').val() == '' || $('#VenueID').val() == null)
+          {
+              alert("Please select Venue !");
+          }
+          else if ($('#GuestCount').val() == '' || $('#GuestCount').val() == null)
+          {
+              alert("Please select GuestCount !");
+          }
+          else if ($('#BookingDate').val() == '' || $('#BookingDate').val() == null)
+          {
+              alert("Please select Date of BookingDate !");
+          }
+          else
+          {
+
+            $.post('@Url.Content("~/")' + "Booking/CheckBooking", {
+
+                EventTypeID: $('#EventTypeID').val(),
+                VenueID: $('#VenueID').val(),
+                GuestCount: $('#GuestCount').val(),
+                BookingDate: $('#BookingDate').val()
+
+
+            }, function (data)
+                {
+                var result = data;
+
+
+                if (result == "Available")
+                {
+                    $("#btnCheckBooking").hide();
+                    $("#btnBookingEvent").show();
+                        alert("Booking is Available You Can Book your Event !!!");
+                    }
+                else
+                {
+                    $("#btnCheckBooking").show();
+                    $("#btnBookingEvent").hide();
+                        alert("Booking is Not Available on '" + BookingDate.value + "'  Selected Date !!!");
+               }
+            });
+          }
+
+
+
+
+    }
+
+
+
+
+</script>
+
+

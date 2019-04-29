@@ -1,0 +1,133 @@
+﻿@model EventManagement.Models.Contact
+@{
+    ViewData["Title"] = "Contact";
+}
+@{
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+
+<section class="section pb-0">
+    <div class="container">
+        <div class="row">
+            <!-- Addresses -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="bg-white box-shadow text-center p-3 px-md-2 px-lg-5">
+                    <i class="fa fa-map-marker text-primary fa-3x mb-4"></i>
+                    <h4 class="mb-4">Our Address</h4>
+                    <ul class="list-unstyled">
+                        <li>Nigar Plaza, Level # 7, Road # 02, Sector # 03, Uttara, Dhaka-1230</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- phone -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="bg-white box-shadow text-center p-3 px-md-2 px-lg-5">
+                    <i class="fa fa-phone text-primary fa-3x mb-4"></i>
+                    <h4 class="mb-4">Phone Number</h4>
+                    <ul class="list-unstyled">
+                        <li>(880) 162-6296-800</li>
+                        <li>(880) 186-2062-798</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Mail -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="bg-white box-shadow text-center p-3 px-md-2 px-lg-5">
+                    <i class="fa fa-envelope text-primary fa-3x mb-4"></i>
+                    <h4 class="mb-4">Message Us</h4>
+                    <ul class="list-unstyled">
+                        <li>info@dream.com</li>
+                        <li>marketing@dream.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        @if (TempData["MessageContact"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["MessageContact"]</p>
+        }
+        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <!-- google map -->
+            <div class="col-md-5 mb-5 mb-md-0">
+                <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDkSnjl40bRv9f-kkAx8O_zR20sRBRf8L4'></script><div style='overflow:hidden;height:500px;width:450px;'>
+                    <div id='gmap_canvas' style='height:500px;width:450px;'></div>
+                    <style>
+                        #gmap_canvas img {
+                            max-width: none !important;
+                            background: none !important
+                        }
+                    </style>
+                </div>
+                <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=f3057f229557436ad8754347d3fe86ba3ef91526'></script>
+                <script type='text/javascript'>function init_map() { var myOptions = { zoom: 17, center: new google.maps.LatLng(23.8641706, 90.39915589999998), mapTypeId: google.maps.MapTypeId.ROADMAP }; map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(23.8641706, 90.39915589999998) }); infowindow = new google.maps.InfoWindow({ content: '<strong>Rajlakshmi, Uttara</strong><br>Nigar Plaza, Level # 7, Road # 02, Sector # 03, Uttara<br>1230 Dhaka<br>' }); google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); }); infowindow.open(map, marker); } google.maps.event.addDomListener(window, 'load', init_map);</script>
+                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUFfM7kjpc6tQgaKEQqjVZCrq5Wp0IKWg&v=3.27"></script>
+                <script type="text/javascript">
+        var markers = @Html.Raw(ViewBag.Markers);
+        window.onload = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var infoWindow = new google.maps.InfoWindow();
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            for (i = 0; i < markers.length; i++) {
+                var data = markers[i]
+                var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: data.title
+                });
+                (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        infoWindow.setContent(data.description);
+                        infoWindow.open(map, marker);
+                    });
+                })(marker, data);
+            }
+        }
+                </script>
+            </div>
+            <div class="col-md-7">
+                <h3 class="section-title">Contact Form</h3>
+                <form method="post" asp-controller="Customer" asp-action="Contact" class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input asp-for="Name" type="text" class="form-control border-0 rounded-0 box-shadow mb-4" placeholder="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <input asp-for="EmailID" type="text" class="form-control border-0 rounded-0 box-shadow mb-4" placeholder="Email">
+                        <span asp-validation-for="EmailID" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input asp-for="Mobileno" maxlength="11" name="Mobileno" type="text" class="form-control border-0 rounded-0 box-shadow mb-4" placeholder="Phone">
+                        <span asp-validation-for="Mobileno" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input asp-for="Subject" type="text" class="form-control border-0 rounded-0 box-shadow mb-4" placeholder="Subject">
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <textarea asp-for="Message" class="form-control border-0 rounded-0 box-shadow mb-5 py-3 px-4" placeholder="Your Message"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary hover-ripple">send message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>

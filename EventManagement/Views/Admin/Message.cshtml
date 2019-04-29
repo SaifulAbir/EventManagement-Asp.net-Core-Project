@@ -1,0 +1,41 @@
+﻿@model EventManagement.Models.Contact
+@{
+    Layout = "~/Views/Shared/_AdminLayoutDataTable.cshtml";
+}
+<div class="container">
+    <br />
+    <div class="row">
+        <div style="width:118%; margin:0px 190px 0px 195px;">
+            <div class="card bg-colornew w-100 shadow">
+                <div class="card-header badge"><h3>Details of Message</h3></div>
+                <div class="card-body">
+                    <div class="col-lg-4 d-inline-block">
+                        <label class="control-label" asp-for="@Model.Name">Name</label>
+                        <input asp-for="@Model.Name" type="text" readonly="readonly" class="form-control" />
+                    </div>
+                    <div class="col-lg-4 d-inline-block">
+                        <label class="control-label" asp-for="@Model.EmailID">Email</label>
+                        <input asp-for="@Model.EmailID" readonly="readonly" type="text" class="form-control" />
+                    </div>
+                    <div class="col-lg-3 d-inline-block">
+                        <label class="control-label" asp-for="@Model.Mobileno">Mobile</label>
+                        <input asp-for="@Model.Mobileno" readonly="readonly" type="text" class="form-control" />
+                    </div>
+                    <div class="col-lg-10">
+                        <br />
+                        <label class="control-label" asp-for="@Model.Mobileno"><b>Subject</b></label>
+                        <p>@Model.Subject</p>
+                    </div>
+                    <div class="col-lg-10">
+  
+                        <label class="control-label" asp-for="@Model.Message"><b>Message</b></label>
+                        <p>@Model.Message</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+</div>

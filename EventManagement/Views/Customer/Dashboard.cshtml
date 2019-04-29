@@ -1,0 +1,72 @@
+﻿@model EventManagement.Models.BookingOverview
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h2>
+                <span class="badge badge-light">
+                    Your entire booking status From <span class="text-warning">@DateTime.Now.ToString("dd MMMM yyyy")</span> to
+                    @if (Model.RecentBookingDate == "[N/A]")
+                    {
+
+                        <span class="text-danger">[No date Available]</span>
+
+                    }
+                    else
+                    {
+                        <span class="text-danger">@Model.RecentBookingDate</span>
+                    }
+                </span>
+            </h2>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">From <b>@DateTime.Now.ToString("dd MMMM yyyy")</b> To <b>@Model.RecentBookingDate</b> Total Booking Request.</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">Your Total Upcoming Event Till <b>@Model.RecentBookingDate</b> </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <span class="count-name-new">Total Cancelled or Rejected Request Till <b>@Model.RecentBookingDate</b>. </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card-counter primary">
+                <i class="fa fa-check-circle"></i>
+                <span class="count-numbers">Total @Model.TotalRequest</span>
+                <span class="count-name"> Booking Request.</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-counter danger">
+                <i class="fa fa-bullhorn"></i>
+                <span class="count-numbers">Total @Model.TotalUpcoming</span>
+                <span class="count-name">Upcoming Event.</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-counter success">
+                <i class="fa fa-minus-circle"></i>
+                <span class="count-numbers">Total @Model.TotalCancel</span>
+                <span class="count-name"> Cancelled or Rejected request.</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
